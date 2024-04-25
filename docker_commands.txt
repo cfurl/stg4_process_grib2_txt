@@ -1,0 +1,77 @@
+# Scraper part from NCEP
+
+# build your scraper image
+# I have this image up on my account cfurl/rtma_scraper_image_r
+
+docker build -t stg4_process_grib2_txt .
+
+
+# run the scraper image
+# start the Daemon, run this in powershell, I think unimportant what folder you're navigated to
+
+docker run -v //c/shiny/stg4_process_grib2_txt:/home/stg4_process_grib2_txt stg4_process_grib2_txt:latest
+
+
+
+# docker-compose.yml to run the scaper image with volume mounts on machine
+# navigate to C:\shiny\stg4_scraper_r> docker-compose up
+
+services:
+  
+  some-name:
+    image: cfurl/rtma_scraper:v2
+    volumes: 
+        - //c/shiny/stg4_scraper_r:/home/stg4_scraper_r
+		
+##########################################################################################################		
+		
+# pull down homeboys wgrib2 image
+		docker pull sondngyn/wgrib2
+		
+# example of running a container from that image
+docker run -v C:\shiny\docker_grib\:/srv/ -v C:\shiny\docker_grib\:/opt/ sondngyn/wgrib2 run_docker_win.sh
+
+
+# docker compose .yml with the wgrib2 image 
+services:
+  wgrib2:
+    image: sondngyn/wgrib2:latest
+    container_name: wgrib2
+    # Change this command to your bash script filename
+    command: "run_docker_win.sh"
+    volumes: 
+      - C:\shiny\docker_grib\:/srv/
+      - C:\shiny\docker_grib\:/opt/
+
+
+#######################################################
+
+# docker compose .yml combining the scraper and wgrib
+# need the .yml and rtma_scraper.R in a folder.  .yml should pull images from repository if not local.
+
+services:
+  
+  scraper:
+    image: cfurl/stg4_scraper:v1
+    container_name: scraper
+    #first path is where you place .yml and rtma_scraper.R, second path shouldn't change
+    volumes: 
+        - //c/shiny/stg4_scraper_r:/home/stg4_scraper_r
+
+  wgrib2:
+    image: sondngyn/wgrib2:latest
+    container_name: wgrib2
+    command: "wgrib2_commands.sh"
+    depends_on:
+      scraper:
+        condition: service_completed_successfully
+    volumes: 
+      - C:\shiny\stg4_scraper_r\:/srv/
+      - C:\shiny\stg4_scraper_r\:/opt/
+
+
+
+
+
+
+

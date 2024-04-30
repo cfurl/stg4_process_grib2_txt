@@ -43,6 +43,6 @@ st4 <- ggplot(data = mod_shape) +
       geom_sf(aes(fill = get(`name`)), color = NA)+
       ggtitle(name)
 
-ggsave (filename=paste0(name,".png"),plot = st4, width = 5.25, height=4, units="in")
+ggsave (filename=paste0("stg4_drop",".png"),plot = st4, width = 5.25, height=4, units="in")
 
 

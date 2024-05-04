@@ -4,12 +4,13 @@
 # I have this image up on my account cfurl/rtma_scraper_image_r
 
 docker build -t stg4_process_grib2_txt .
-
+docker build -t stg4_deploy .
 
 # run the scraper image
 # start the Daemon, run this in powershell, I think unimportant what folder you're navigated to
 
 docker run -v //c/shiny/stg4_process_grib2_txt:/home/stg4_process_grib2_txt stg4_process_grib2_txt:latest
+docker run -v //c/stg4/stg4_deploy:/home/stg4_deploy cfurl/stg4_deploy:v1
 
 
 

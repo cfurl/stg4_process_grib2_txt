@@ -39,9 +39,19 @@ shape <- st_read(paste0(getwd(),"/hrap_poly_clip.shp"))
 mod_shape <- shape %>% 
   left_join(bb, by = "grib_id") 
 
-st4 <- ggplot(data = mod_shape) +
-      geom_sf(aes(fill = get(`name`)), color = NA)+
-      ggtitle(name)
+#st4 <- ggplot(data = mod_shape) +
+#      geom_sf(aes(fill = get(`name`)), color = NA)+
+#      ggtitle(name)
+
+st4 <- ggplot(data =mod_shape) +
+  geom_sf(aes(fill = get(`name`)), color = NA)+
+  scale_fill_stepsn(colours=c("lightblue","red","blue","green","orange"),
+                    breaks = c(3, 5, 10, 20),
+                    limits=c(0,100),
+                    values = scales::rescale(c(1.5, 4, 7.5, 15,60), 
+                                             from = c(0, 100)),
+                    show.limits = TRUE)
+
 
 ggsave (filename=paste0("stg4_drop",".png"),plot = st4, width = 5.25, height=4, units="in")
 

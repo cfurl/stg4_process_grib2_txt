@@ -45,11 +45,11 @@ mod_shape <- shape %>%
 
 st4 <- ggplot(data =mod_shape) +
   geom_sf(aes(fill = get(`name`)), color = NA)+
-  scale_fill_stepsn(colours=c("lightblue","red","blue","green","orange"),
-                    breaks = c(3, 5, 10, 20),
-                    limits=c(0,100),
-                    values = scales::rescale(c(1.5, 4, 7.5, 15,60), 
-                                             from = c(0, 100)),
+  scale_fill_stepsn(colours=c("#61686D","#82D3F0","#83B2C3","#0826A2","#22FE05","#2CAC1B","#248418", "#F6FB07", "#FFE890", "#FFC348","#E01E17", "#A92B26","#8C302C","#CC17DA", "#AE6DB3","white" ),
+                    breaks = c(.001, 2.54, 6.35, 12.7, 19.05, 25.4, 38.1, 50.8, 63.5, 76.2, 101.6, 127, 152.4, 203.2, 254),
+                    limits=c(0,381),
+                    values = scales::rescale(c(.0005, 1.40, 4.44, 9.52, 15.87, 22.22, 31.75, 44.45, 57.15, 69.85, 88.9, 114.3, 139.7, 177.8, 228.6, 317.5), 
+                                             from = c(0, 381)),
                     show.limits = TRUE)
 
 

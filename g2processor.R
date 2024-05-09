@@ -12,10 +12,11 @@ library(ggplot2)
 
 
 #read in your csv for AOI it should have grib_id, hrap_x, hrap_y, center_lon, center_lat for grib2 cells
-aoi_texas_buffer<-read_csv(paste0(getwd(),"/texas_buffer_spatial_join.csv"))
+#aoi_texas_buffer<-read_csv(paste0(getwd(),"/texas_buffer_spatial_join.csv"))
+aoi_texas_buffer<-read_csv("/gis/texas_buffer_spatial_join.csv")
 
 #starts with st4_conus. and ends with .txt
-raw_grib2_text<-list.files(getwd(),pattern = "^st4_conus.*.txt$",full.names=FALSE)
+raw_grib2_text<-list.files("/data",pattern = "^st4_conus.*.txt$",full.names=FALSE)
 
 #h<-list.files(getwd(),pattern = "^st4_conus.*.txt$",full.names=FALSE)
 
@@ -25,7 +26,7 @@ for (h in raw_grib2_text) {
     str_replace("st4_conus.", "t") |>
     str_replace(".01h.txt","")
   
- aa<-read_csv(paste0(getwd(),"/",h), col_names=FALSE) %>%
+ aa<-read_csv(paste0("/data/",h), col_names=FALSE) %>%
     setNames(c("x1","x2","x3","x4","center_lon","center_lat",name)) %>%
     select(-x1,-x2,-x3,-x4)   
     
@@ -34,14 +35,12 @@ for (h in raw_grib2_text) {
     }  
 
 
-shape <- st_read(paste0(getwd(),"/hrap_poly_clip.shp"))
+shape <- st_read("/gis/texas_grib_bins_clipped.shp")
 
 mod_shape <- shape %>% 
   left_join(bb, by = "grib_id") 
 
-#st4 <- ggplot(data = mod_shape) +
-#      geom_sf(aes(fill = get(`name`)), color = NA)+
-#      ggtitle(name)
+
 
 st4 <- ggplot(data =mod_shape) +
   geom_sf(aes(fill = get(`name`)), color = NA)+
@@ -53,6 +52,6 @@ st4 <- ggplot(data =mod_shape) +
                     show.limits = TRUE)
 
 
-ggsave (filename=paste0("stg4_drop",".png"),plot = st4, width = 5.25, height=4, units="in")
+ggsave (filename=paste0("/output/stg4_drop",".png"),plot = st4, width = 5.25, height=4, units="in")
 
 

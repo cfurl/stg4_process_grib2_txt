@@ -13,8 +13,8 @@ docker build -t stg4_deploy .
 docker run -v //c/shiny/stg4_process_grib2_txt:/home/stg4_process_grib2_txt stg4_process_grib2_txt:latest
 docker run -v //c/stg4/stg4_deploy:/home/stg4_deploy cfurl/stg4_deploy:v1
 
-docker run -it -v //c/stg4:/output -v //c/shiny/stg4_process_grib2_txt/data:/data stg4_process_grib2_txt
-
+docker run -it -v //c/shiny/stg4_process_grib2_txt:/output -v //c/shiny/stg4_process_grib2_txt/data:/data stg4_process_grib2_txt
+docker run -it -v //c/shiny:/output -v //c/shiny/stg4_process_grib2_txt/data:/data cfurl/stg4_process_grib2_txt:v1
 
 # docker-compose.yml to run the scaper image with volume mounts on machine
 # navigate to C:\shiny\stg4_scraper_r> docker-compose up

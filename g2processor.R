@@ -52,6 +52,6 @@ st4 <- ggplot(data =mod_shape) +
                     show.limits = TRUE)
 
 
-ggsave (filename=paste0("/output/stg4_drop",".png"),plot = st4, width = 5.25, height=4, units="in")
-
+#ggsave (filename=paste0("/output/stg4_drop",".png"),plot = st4, width = 5.25, height=4, units="in")
+ggsave (filename=paste0("/output/",name,".png"),plot = st4, width = 5.25, height=4, units="in")
 

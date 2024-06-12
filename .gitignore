@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+hrap_poly_clip.dbf
+texas_grib_bins_clipped*
+stg4_drop.png
+texas_buffer_spatial_join.csv
+st4_conus*
